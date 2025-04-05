@@ -16,11 +16,14 @@ export const useUserStore = create((set, get) => ({
     }
 
     try {
-      const res = await axios.post("http://localhost:3000/api/auth/signup", {
-        name,
-        email,
-        password,
-      });
+      const res = await axios.post(
+        `${import.meta.env.VITE_API_BASE_URL}/api/auth/signup`,
+        {
+          name,
+          email,
+          password,
+        }
+      );
       set({ user: res.data, loading: false });
     } catch (error) {
       set({ loading: false });
@@ -31,10 +34,13 @@ export const useUserStore = create((set, get) => ({
     set({ loading: true });
 
     try {
-      const res = await axios.post("http://localhost:3000/api/auth/login", {
-        email,
-        password,
-      });
+      const res = await axios.post(
+        `${import.meta.env.VITE_API_BASE_URL}/api/auth/login`,
+        {
+          email,
+          password,
+        }
+      );
 
       set({ user: res.data, loading: false });
     } catch (error) {
@@ -45,7 +51,7 @@ export const useUserStore = create((set, get) => ({
 
   logout: async () => {
     try {
-      await axios.post("http://localhost:3000/api/auth/logout");
+      await axios.post(`${import.meta.env.VITE_API_BASE_URL}/api/auth/logout`);
       set({ user: null });
     } catch (error) {
       toast.error(
@@ -58,7 +64,7 @@ export const useUserStore = create((set, get) => ({
     set({ checkingAuth: true });
     try {
       const response = await axios.get(
-        "http://localhost:3000/api/auth/profile"
+        `${import.meta.env.VITE_API_BASE_URL}/api/auth/profile`
       );
       set({ user: response.data, checkingAuth: false });
     } catch (error) {
@@ -74,7 +80,7 @@ export const useUserStore = create((set, get) => ({
     set({ checkingAuth: true });
     try {
       const response = await axios.post(
-        "http://localhost:3000/api/auth/refresh-token"
+        `${import.meta.env.VITE_API_BASE_URL}/api/auth/refresh-token`
       );
       set({ checkingAuth: false });
       return response.data;

@@ -14,7 +14,7 @@ export const useCouponStore = create((set) => ({
     set({ loading: true });
     try {
       const res = await axios.post(
-        "http://localhost:3000/api/coupons/add",
+        `${import.meta.env.VITE_API_BASE_URL}/api/coupons/add`,
         couponData
       );
       set((prevState) => ({
@@ -32,7 +32,9 @@ export const useCouponStore = create((set) => ({
   fetchAllCoupons: async () => {
     set({ loading: true });
     try {
-      const response = await axios.get("http://localhost:3000/api/coupons");
+      const response = await axios.get(
+        `${import.meta.env.VITE_API_BASE_URL}/api/coupons`
+      );
       set({ coupons: response.data.coupons, loading: false });
     } catch (error) {
       set({ error: "Failed to fetch coupons", loading: false });
@@ -45,7 +47,7 @@ export const useCouponStore = create((set) => ({
     set({ loading: true });
     try {
       await axios.delete(
-        `http://localhost:3000/api/coupons/delete/${couponId}`
+        `${import.meta.env.VITE_API_BASE_URL}/api/coupons/delete/${couponId}`
       );
       set((prevState) => ({
         coupons: prevState.coupons.filter((coupon) => coupon._id !== couponId),
@@ -63,7 +65,7 @@ export const useCouponStore = create((set) => ({
     set({ loading: true });
     try {
       const response = await axios.patch(
-        `http://localhost:3000/api/coupons/toggle/${couponId}`
+        `${import.meta.env.VITE_API_BASE_URL}/api/coupons/toggle/${couponId}`
       );
       set((prevState) => ({
         coupons: prevState.coupons.map((coupon) =>

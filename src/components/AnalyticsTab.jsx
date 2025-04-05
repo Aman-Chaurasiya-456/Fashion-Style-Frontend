@@ -26,7 +26,9 @@ const AnalyticsTab = () => {
   useEffect(() => {
     const fetchAnalyticsData = async () => {
       try {
-        const response = await axios.get("http://localhost:3000/api/analytics");
+        const response = await axios.get(
+          `${import.meta.env.VITE_API_BASE_URL}/api/analytics`
+        );
         setAnalyticsData(response.data.analyticsData);
         setDailySalesData(response.data.dailySalesData);
       } catch (error) {

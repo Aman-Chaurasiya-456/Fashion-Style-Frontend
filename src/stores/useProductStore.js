@@ -11,7 +11,7 @@ export const useProductStore = create((set) => ({
     set({ loading: true });
     try {
       const res = await axios.post(
-        "http://localhost:3000/api/products",
+        `${import.meta.env.VITE_API_BASE_URL}/api/products`,
         productData
       );
       set((prevState) => ({
@@ -26,7 +26,9 @@ export const useProductStore = create((set) => ({
   fetchAllProducts: async () => {
     set({ loading: true });
     try {
-      const response = await axios.get("http://localhost:3000/api/products");
+      const response = await axios.get(
+        `${import.meta.env.VITE_API_BASE_URL}/api/products`
+      );
       set({ products: response.data.products, loading: false });
     } catch (error) {
       set({ error: "Failed to fetch products", loading: false });
@@ -37,7 +39,7 @@ export const useProductStore = create((set) => ({
     set({ loading: true });
     try {
       const response = await axios.get(
-        `http://localhost:3000/api/products/category/${category}`
+        `${import.meta.env.VITE_API_BASE_URL}/api/products/category/${category}`
       );
       set({ products: response.data.products, loading: false });
     } catch (error) {
@@ -48,7 +50,9 @@ export const useProductStore = create((set) => ({
   deleteProduct: async (productId) => {
     set({ loading: true });
     try {
-      await axios.delete(`http://localhost:3000/api/products/${productId}`);
+      await axios.delete(
+        `${import.meta.env.VITE_API_BASE_URL}/api/products/${productId}`
+      );
       set((prevProducts) => ({
         products: prevProducts.products.filter(
           (product) => product._id !== productId
@@ -64,7 +68,7 @@ export const useProductStore = create((set) => ({
     set({ loading: true });
     try {
       const response = await axios.patch(
-        `http://localhost:3000/api/products/${productId}`
+        `${import.meta.env.VITE_API_BASE_URL}/api/products/${productId}`
       );
       // this will update the isFeatured prop of the product
       set((prevProducts) => ({
@@ -84,7 +88,7 @@ export const useProductStore = create((set) => ({
     set({ loading: true });
     try {
       const response = await axios.get(
-        "http://localhost:3000/api/products/featured"
+        `${import.meta.env.VITE_API_BASE_URL}/api/products/featured`
       );
       set({ products: response.data, loading: false });
     } catch (error) {

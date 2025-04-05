@@ -12,7 +12,7 @@ const PeopleAlsoBought = () => {
     const fetchRecommendations = async () => {
       try {
         const res = await axios.get(
-          "http://localhost:3000/api/products/recommendations"
+          `${import.meta.env.VITE_API_BASE_URL}/api/products/recommendations`
         );
         setRecommendations(res.data);
       } catch (error) {

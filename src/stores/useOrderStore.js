@@ -10,7 +10,7 @@ export const useOrderStore = create((set) => ({
     set({ loading: true, error: null });
     try {
       const response = await axios.get(
-        "http://localhost:3000/api/payments/confirmed-orders"
+        `${import.meta.env.VITE_API_BASE_URL}/api/payments/confirmed-orders`
       );
       set({ orders: response.data.orders, loading: false });
     } catch (error) {
