@@ -30,6 +30,7 @@ export const useUserStore = create((set, get) => ({
       toast.error(error.response.data.message || "An error occurred");
     }
   },
+
   login: async (email, password) => {
     set({ loading: true });
 
@@ -74,18 +75,30 @@ export const useUserStore = create((set, get) => ({
   },
 
   refreshToken: async () => {
-    // Prevent multiple simultaneous refresh attempts
     if (get().checkingAuth) return;
 
     set({ checkingAuth: true });
+
     try {
       const response = await axios.post(
-        `${import.meta.env.VITE_API_BASE_URL}/api/auth/refresh-token`
+        `${import.meta.env.VITE_API_BASE_URL}/api/auth/refresh-token`,
+        {}, // send an empty body
+        { withCredentials: true } // make sure cookies are sent
       );
+
+      const { accessToken } = response.data;
+
+      // ✅ Store accessToken in localStorage
+      localStorage.setItem("accessToken", accessToken);
+
       set({ checkingAuth: false });
-      return response.data;
+      return accessToken;
     } catch (error) {
       set({ user: null, checkingAuth: false });
+
+      // Clear any old token in case refresh failed
+      localStorage.removeItem("accessToken");
+
       throw error;
     }
   },
