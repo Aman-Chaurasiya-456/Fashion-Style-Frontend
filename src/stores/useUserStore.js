@@ -40,7 +40,8 @@ export const useUserStore = create((set, get) => ({
         {
           email,
           password,
-        }
+        },
+        { withCredentials: true }
       );
 
       set({ user: res.data, loading: false });
